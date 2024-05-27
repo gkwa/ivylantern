@@ -1,11 +1,8 @@
-import sys
-
-from . import main2
-
 __project_name__ = "ivylantern"
+
+from . import ivylantern
 
 
 def main() -> int:
-    out = main2.render_template("extended.j2")
-    sys.stdout.write(out)
+    ivylantern.main()
     return 0
