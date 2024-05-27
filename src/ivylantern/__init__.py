@@ -3,16 +3,46 @@ import re
 
 __project_name__ = "ivylantern"
 
+SECONDS_PER_YEAR = int(365.2425 * 24 * 60 * 60)
+SECONDS_PER_MONTH = int(SECONDS_PER_YEAR / 12)
+SECONDS_PER_DAY = 24 * 60 * 60
+SECONDS_PER_HOUR = 60 * 60
+SECONDS_PER_MINUTE = 60
+SECONDS_PER_SECOND = 1
 
-def convert_duration(duration):
+
+def seconds_to_friendly_duration(total_seconds):
+    units = [
+        (SECONDS_PER_YEAR, "y"),
+        (SECONDS_PER_MONTH, "M"),
+        (SECONDS_PER_DAY, "d"),
+        (SECONDS_PER_HOUR, "h"),
+        (SECONDS_PER_MINUTE, "m"),
+        (SECONDS_PER_SECOND, "s"),
+    ]
+
+    if total_seconds == 0:
+        return "0s"
+
+    parts = []
+    for unit_seconds, unit_name in units:
+        count = total_seconds // unit_seconds
+        if count > 0:
+            total_seconds -= count * unit_seconds
+            parts.append(f"{count}{unit_name}")
+
+    return "".join(parts)
+
+
+def friendly_duration_to_seconds(duration):
     seconds_per_unit = {
-        "s": 1,
-        "m": 60,
-        "h": 60 * 60,
-        "d": 24 * 60 * 60,
-        "w": 7 * 24 * 60 * 60,
-        "M": int(365.2425 / 12 * 24 * 60 * 60),  # Average
-        "y": int(365.2425 * 24 * 60 * 60),  # Average
+        "s": SECONDS_PER_SECOND,
+        "m": SECONDS_PER_MINUTE,
+        "h": SECONDS_PER_HOUR,
+        "d": SECONDS_PER_DAY,
+        "w": 7 * SECONDS_PER_DAY,
+        "M": SECONDS_PER_MONTH,
+        "y": SECONDS_PER_YEAR,
     }
 
     pattern = re.compile(r"(\d*\.?\d+)([smhdwMy])")
@@ -40,8 +70,9 @@ def main():
     args = parser.parse_args()
 
     try:
-        seconds = convert_duration(args.duration)
+        seconds = friendly_duration_to_seconds(args.duration)
         print(f"{args.duration} is equal to {seconds} seconds")
+        print(f"Formatted duration: {seconds_to_friendly_duration(seconds)}")
     except ValueError as e:
         print(str(e))
 
