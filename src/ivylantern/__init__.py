@@ -5,6 +5,7 @@ __project_name__ = "ivylantern"
 
 SECONDS_PER_YEAR = int(365.2425 * 24 * 60 * 60)
 SECONDS_PER_MONTH = int(SECONDS_PER_YEAR / 12)
+SECONDS_PER_WEEK = 7 * 24 * 60 * 60
 SECONDS_PER_DAY = 24 * 60 * 60
 SECONDS_PER_HOUR = 60 * 60
 SECONDS_PER_MINUTE = 60
@@ -15,6 +16,7 @@ def seconds_to_friendly_duration(total_seconds):
     units = [
         (SECONDS_PER_YEAR, "y"),
         (SECONDS_PER_MONTH, "M"),
+        (SECONDS_PER_WEEK, "w"),
         (SECONDS_PER_DAY, "d"),
         (SECONDS_PER_HOUR, "h"),
         (SECONDS_PER_MINUTE, "m"),
@@ -40,7 +42,7 @@ def friendly_duration_to_seconds(duration):
         "m": SECONDS_PER_MINUTE,
         "h": SECONDS_PER_HOUR,
         "d": SECONDS_PER_DAY,
-        "w": 7 * SECONDS_PER_DAY,
+        "w": SECONDS_PER_WEEK,
         "M": SECONDS_PER_MONTH,
         "y": SECONDS_PER_YEAR,
     }
