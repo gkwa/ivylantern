@@ -8,11 +8,11 @@ def convert_duration(duration):
     seconds_per_unit = {
         "s": 1,
         "m": 60,
-        "h": 3600,
-        "d": 86400,
-        "w": 604800,
-        "M": 2592000,
-        "y": 31536000,
+        "h": 60 * 60,
+        "d": 24 * 60 * 60,
+        "w": 7 * 24 * 60 * 60,
+        "M": int(365.2425 / 12 * 24 * 60 * 60),  # Average
+        "y": int(365.2425 * 24 * 60 * 60),  # Average
     }
 
     pattern = re.compile(r"(\d*\.?\d+)([smhdwMy])")
